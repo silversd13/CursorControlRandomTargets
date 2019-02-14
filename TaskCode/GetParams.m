@@ -8,7 +8,7 @@ function Params = GetParams(Params)
 Params.Verbose = true;
 
 %% Experiment
-Params.Task = 'Center-Out';
+Params.Task = 'RandomTargets';
 switch Params.ControlMode,
     case 1, Params.ControlModeStr = 'MousePosition';
     case 2, Params.ControlModeStr = 'MouseVelocity';
@@ -38,11 +38,11 @@ if strcmpi(Params.Subject,'Test'),
 end
 
 if IsWin,
-    projectdir = 'C:\Users\ganguly-lab2\Documents\MATLAB\Center-Out';
+    projectdir = 'C:\Users\ganguly-lab2\Documents\MATLAB\CursorControlRandomTargets';
 elseif IsOSX,
-    projectdir = '/Users/daniel/Projects/Center-Out/';
+    projectdir = '/Users/daniel/Projects/CursorControlRandomTargets/';
 else,
-    projectdir = '/home/dsilver/Projects/Center-Out/';
+    projectdir = '/home/dsilver/Projects/CursorControlRandomTargets/';
 end
 addpath(genpath(fullfile(projectdir,'TaskCode')));
 
@@ -77,19 +77,17 @@ Params.BaselineTime = 0; % secs
 
 %% Targets
 Params.TargetSize = 30;
-Params.OutTargetColor = [0,255,0];
-Params.InTargetColor = [255,0,0];
-
-Params.StartTargetPosition  = [0,0];
 Params.TargetRect = ...
     [-Params.TargetSize -Params.TargetSize +Params.TargetSize +Params.TargetSize];
-
-Params.ReachTargetAngles = (0:45:315)';
-Params.ReachTargetRadius = 400;
-Params.ReachTargetPositions = ...
-    Params.StartTargetPosition ...
-    + Params.ReachTargetRadius ...
-    * [cosd(Params.ReachTargetAngles) sind(Params.ReachTargetAngles)];
+Params.OutTargetColor = [0,255,0];
+Params.InTargetColor = [255,0,0];
+Params.Workspace = [-400,-400;400,400]; % [x0,y0;x1,y1]
+Params.NewTargetDist = 100;
+Params.TargetSelectionFlag  = 1; % 1-uniform from workspace, 2-1, but must be dist away from cursor
+switch Params.TargetSelectionFlag,
+    case 1, Params.TargetFunc = @() URand(Params.Workspace);
+    case 2, Params.TargetFunc = @() URandDist(Params.Workspace,Params.NewTargetDist);
+end
 
 %% Cursor
 Params.CursorColor = [0,0,255];
@@ -117,15 +115,10 @@ if Params.ControlMode==3,
 end
 
 %% Trial and Block Types
-Params.NumImaginedBlocks    = 0;
+Params.NumImaginedBlocks    = 1;
 Params.NumAdaptBlocks       = 1;
 Params.NumFixedBlocks       = 1;
-Params.NumTrialsPerBlock    = length(Params.ReachTargetAngles);
-Params.TargetSelectionFlag  = 1; % 1-pseudorandom, 2-random
-switch Params.TargetSelectionFlag,
-    case 1, Params.TargetFunc = @randperm;
-    case 2, Params.TargetFunc = @(n) randi(n,1,n);
-end
+Params.NumTrialsPerBlock    = 10;
 
 %% CLDA Parameters
 TypeStrs                = {'none','refit','smooth_batch','rml'};
@@ -164,7 +157,6 @@ end
 %% Hold Times
 Params.TargetHoldTime = .3;
 Params.InterTrialInterval = 0;
-Params.InstructedDelayTime = 0;
 Params.MaxStartTime = 10;
 Params.MaxReachTime = 10;
 Params.InterBlockInterval = 0;
@@ -184,10 +176,10 @@ Params.ZscoreRawFlag = true;
 Params.ZscoreFeaturesFlag = false;
 Params.SaveProcessed = false;
 
-Params.DimRed.Flag = true;
+Params.DimRed.Flag = false;
 Params.DimRed.Method = 1; % 1-pca, 2-fa
 Params.DimRed.AvgTrialsFlag = false; % 0-cat imagined mvmts, 1-avg imagined mvmts
-Params.DimRed.NumDims = 592;
+Params.DimRed.NumDims = [];
 
 Params.Fs = 1000;
 Params.NumChannels = 128;

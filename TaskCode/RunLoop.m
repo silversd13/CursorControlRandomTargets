@@ -10,8 +10,6 @@ DataFields = struct(...
     'Trial',NaN,...
     'TrialStartTime',NaN,...
     'TrialEndTime',NaN,...
-    'TargetID',NaN,...
-    'TargetAngle',NaN,...
     'TargetPosition',NaN,...
     'Time',[],...
     'CursorAssist',[],...
@@ -45,13 +43,9 @@ Cursor.State = [0,0,0,0,1]';
 Cursor.IntendedState = [0,0,0,0,1]';
 for Block=1:NumBlocks, % Block Loop
 
-    % random order of reach targets for each block
-    TargetOrder = Params.TargetFunc(Params.NumTrialsPerBlock);
-
     for TrialPerBlock=1:Params.NumTrialsPerBlock, % Trial Loop
         % update trial
         Trial = Trial + 1;
-        TrialIdx = TargetOrder(TrialPerBlock);
         
         % if smooth batch on & enough time has passed, update KF btw trials
         if TaskFlag==2 && Neuro.CLDA.Type==2,
@@ -85,9 +79,7 @@ for Block=1:NumBlocks, % Block Loop
         TrialData = DataFields;
         TrialData.Block = Block;
         TrialData.Trial = Trial;
-        TrialData.TargetID = TrialIdx;
-        TrialData.TargetAngle = Params.ReachTargetAngles(TrialIdx);
-        TrialData.TargetPosition = Params.ReachTargetPositions(TrialIdx,:);
+        TrialData.TargetPosition = Params.TargetFunc();
         TrialData.KalmanFilter = KF;
 
         % Run Trial

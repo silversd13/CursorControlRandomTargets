@@ -109,7 +109,9 @@ else,
     fprintf('\n    - save filtered data: %s', LogicalStr{Params.ZscoreRawFlag+1})
 end
 fprintf('\n    - dimensionality reduction: %s', LogicalStr{Params.DimRed.Flag+1})
-fprintf('\n      - method: %s', DimRedStr{Params.DimRed.Method})
+if Params.DimRed.Flag,
+    fprintf('\n      - method: %s', DimRedStr{Params.DimRed.Method})
+end
 
 fprintf('\n\n  BCI Parameters:')
 fprintf('\n    - Imagined Movements: %s', LogicalStr{double(Params.NumImaginedBlocks>0) +1})
