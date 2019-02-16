@@ -73,7 +73,7 @@ mkdir(datadir);
 %% Timing
 Params.ScreenRefreshRate = 10; % Hz
 Params.UpdateRate = 10; % Hz
-Params.BaselineTime = 0; % secs
+Params.BaselineTime = 10; % secs
 
 %% Targets
 Params.TargetSize = 30;
@@ -83,7 +83,7 @@ Params.OutTargetColor = [0,255,0];
 Params.InTargetColor = [255,0,0];
 Params.Workspace = [-400,-400;400,400]; % [x0,y0;x1,y1]
 Params.NewTargetDist = 100;
-Params.TargetSelectionFlag  = 1; % 1-uniform from workspace, 2-1, but must be dist away from cursor
+Params.TargetSelectionFlag  = 2; % 1-uniform from workspace, 2-1, but must be dist away from cursor
 switch Params.TargetSelectionFlag,
     case 1, Params.TargetFunc = @() URand(Params.Workspace);
     case 2, Params.TargetFunc = @() URandDist(Params.Workspace,Params.NewTargetDist);
