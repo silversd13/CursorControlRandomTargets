@@ -1,4 +1,4 @@
-function [Neuro,KF] = RunLoop(Params,Neuro,TaskFlag,DataDir,KF)
+function [Neuro,KF,Params] = RunLoop(Params,Neuro,TaskFlag,DataDir,KF)
 % Defines the structure of collected data on each trial
 % Loops through blocks and trials within blocks
 
@@ -84,7 +84,7 @@ for Block=1:NumBlocks, % Block Loop
 
         % Run Trial
         TrialData.TrialStartTime  = GetSecs;
-        [TrialData,Neuro,KF] = RunTrial(TrialData,Params,Neuro,TaskFlag,KF);
+        [TrialData,Neuro,KF,Params] = RunTrial(TrialData,Params,Neuro,TaskFlag,KF);
         TrialData.TrialEndTime    = GetSecs;
                 
         % Save Data from Single Trial

@@ -151,17 +151,17 @@ try
     
     % Imagined Cursor Movements Loop
     if Params.NumImaginedBlocks>0,
-        [Neuro,KF] = RunTask(Params,Neuro,1,KF);
+        [Neuro,KF,Params] = RunTask(Params,Neuro,1,KF);
     end
     
     % Adaptation Loop
     if Params.NumAdaptBlocks>0,
-        [Neuro,KF] = RunTask(Params,Neuro,2,KF);
+        [Neuro,KF,Params] = RunTask(Params,Neuro,2,KF);
     end
     
     % Fixed Decoder Loop
     if Params.NumFixedBlocks>0,
-        [Neuro,KF] = RunTask(Params,Neuro,3,KF);
+        [Neuro,KF,Params] = RunTask(Params,Neuro,3,KF);
     end
     
     % Pause and Finish!

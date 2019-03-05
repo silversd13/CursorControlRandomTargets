@@ -1,4 +1,4 @@
-function [Data, Neuro, KF] = RunTrial(Data,Params,Neuro,TaskFlag,KF)
+function [Data, Neuro, KF, Params] = RunTrial(Data,Params,Neuro,TaskFlag,KF)
 % Runs a trial, saves useful data along the way
 % Each trial contains the following pieces
 % 1) Inter-trial interval
@@ -45,7 +45,7 @@ if ~Data.ErrorID && Params.InterTrialInterval>0,
         tim = GetSecs;
 
         % for pausing and quitting expt
-        if CheckPause, [Neuro,Data] = ExperimentPause(Params,Neuro,Data); end
+        if CheckPause, [Neuro,Data,Params] = ExperimentPause(Params,Neuro,Data); end
 
         % Update Screen Every Xsec
         if (tim-Cursor.LastPredictTime) > 1/Params.ScreenRefreshRate,
@@ -124,7 +124,7 @@ if ~Data.ErrorID,
         tim = GetSecs;
 
         % for pausing and quitting expt
-        if CheckPause, [Neuro,Data] = ExperimentPause(Params,Neuro,Data); end
+        if CheckPause, [Neuro,Data,Params] = ExperimentPause(Params,Neuro,Data); end
 
         % Update Screen
         if (tim-Cursor.LastPredictTime) > 1/Params.ScreenRefreshRate,

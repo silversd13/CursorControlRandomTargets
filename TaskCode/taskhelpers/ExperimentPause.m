@@ -1,4 +1,4 @@
-function [Neuro,Data] = ExperimentPause(Params,Neuro,Data)
+function [Neuro,Data,Params] = ExperimentPause(Params,Neuro,Data)
 % Display text then wait for subject to resume experiment
 
 global Cursor
