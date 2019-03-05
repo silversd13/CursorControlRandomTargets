@@ -96,7 +96,14 @@ for Block=1:NumBlocks, % Block Loop
     end % Trial Loop
     
     % Give Feedback for Block
-    WaitSecs(Params.InterBlockInterval);
+    if Params.InterBlockInterval >= 10,
+        Instructions = [...
+            sprintf('\n\nFinished block %i of %i\n\n',Block,NumBlocks),...
+            '\nPress the ''Space Bar'' to resume task.' ];
+        InstructionScreen(Params,Instructions)
+    else,
+        WaitSecs(Params.InterBlockInterval);
+    end
     
 end % Block Loop
 
