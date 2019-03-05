@@ -42,7 +42,7 @@ if IsWin,
 elseif IsOSX,
     projectdir = '/Users/daniel/Projects/CursorControlRandomTargets/';
 else,
-    projectdir = '/~/Projects/CursorControlRandomTargets/';
+    projectdir = '~/Projects/CursorControlRandomTargets/';
 end
 addpath(genpath(fullfile(projectdir,'TaskCode')));
 
