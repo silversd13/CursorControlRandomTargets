@@ -39,6 +39,7 @@ end
 %% Neural Signal Processing
 % create neuro structure for keeping track of all neuro updates/state
 % changes
+Neuro.SaveRaw           = Params.SaveRaw;
 Neuro.ZscoreRawFlag     = Params.ZscoreRawFlag;
 Neuro.ZscoreFeaturesFlag= Params.ZscoreFeaturesFlag;
 Neuro.DimRed            = Params.DimRed;

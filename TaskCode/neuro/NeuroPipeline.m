@@ -27,7 +27,10 @@ if exist('Data','var') && ~isempty(Data),
     Data.NeuralTimeBR(1,end+1) = Neuro.TimeStamp;
     Data.NeuralSamps(1,end+1) = Neuro.NumSamps;
     Data.NeuralFeatures{end+1} = Neuro.NeuralFeatures;
-    if Neuro.DimRedFlag,
+    if Neuro.SaveRaw,
+        Data.BroadbandData{end+1} = Neuro.BroadbandData;
+    end
+    if Neuro.DimRed.Flag,
         Data.NeuralFactors{end+1} = Neuro.NeuralFactors;
     end
     if Neuro.SaveProcessed,
